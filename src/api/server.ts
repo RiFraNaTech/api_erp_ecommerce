@@ -1,3 +1,4 @@
+import { createConnection, createConnections, getConnection } from "typeorm";
 import express, { Application } from "express";
 import cors, { CorsOptions } from "cors";
 import ServerRouter from "./v1/router";
@@ -25,12 +26,17 @@ class Server {
   }
 
   private _initServices(): void {
+    this._initDatabase();
     this._app.use(morgan(morganOptions));
     this._app.use(cors(corsOptions));
     this._app.use(helmet());
     this._app.use(express.json());
     this._initRoutes();
     this._initErrorHandling();
+  }
+
+  private async _initDatabase(): Promise<void> {
+    await createConnections();
   }
 
   private _initRoutes(): void {
