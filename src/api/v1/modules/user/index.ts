@@ -1,10 +1,10 @@
-import { Router } from "express";
-import router from "./user.routes";
+import { Router } from 'express';
+import router from './user.routes';
 
-const PATH_MODULE = "/users";
+const PATH_MODULE = '/users';
 
-const registerRoutes = (routerContext: Router) => {
+const RegisterRoutes = (routerContext: Router) => {
   routerContext.use(PATH_MODULE, router);
 };
 
-export default registerRoutes;
+export default RegisterRoutes;

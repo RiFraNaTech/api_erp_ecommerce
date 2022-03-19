@@ -1,26 +1,21 @@
-import { User } from "./user.model";
-import ServiceBase from "../../bases/service.base";
+import { User } from './user.model';
+import ServiceBase from '../../bases/service.base';
+import { getConnection, getManager } from 'typeorm';
 
 class UserService extends ServiceBase<User> {
   public findAll(): Promise<User[]> {
-    const users: User[] = [
-      {
-        name: "Rino",
-        surname: "Arias",
-        active: true,
-      },
-      {
-        name: "Tommy",
-        surname: "Apolinario",
-        active: true,
-      },
-      {
-        name: "JeanDavid",
-        surname: "Cabrera",
-        active: false,
-      },
-    ];
-    return Promise.resolve(users);
+    return getConnection().createEntityManager().find(User);
+  }
+
+  public findById(): Promise<User[]> {
+    return getConnection().createEntityManager().find(User);
+  }
+
+  public findByUsername(nameuser: string): Promise<User | null> {
+    // findOneBy(Entity, { whereColum : param });
+    return getConnection()
+      .createEntityManager()
+      .findOneBy(User, { username: nameuser });
   }
 }
 
