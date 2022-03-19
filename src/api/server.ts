@@ -1,12 +1,12 @@
-import express, { Application } from "express";
-import cors, { CorsOptions } from "cors";
-import ServerRouter from "./v1/router";
-import config from "config";
-import helmet from "helmet";
-import morgan from "morgan";
+import express, { Application } from 'express';
+import cors, { CorsOptions } from 'cors';
+import ServerRouter from './v1/router';
+import config from 'config';
+import helmet from 'helmet';
+import morgan from 'morgan';
 
-const corsOptions = config.get<CorsOptions>("cors");
-const morganOptions = config.get<string>("morgan");
+const corsOptions = config.get<CorsOptions>('cors');
+const morganOptions = config.get<string>('morgan');
 
 class Server {
   private readonly _app: Application;
@@ -21,7 +21,9 @@ class Server {
 
   public run(): void {
     this._initServices();
-    this._app.listen(this._port, () => console.log("Servidor corriendo..."));
+    this._app.listen(this._port, () =>
+      console.log('Servidor corriendo en puerto:', this._port)
+    );
   }
 
   private _initServices(): void {
