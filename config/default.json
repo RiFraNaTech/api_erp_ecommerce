@@ -1,0 +1,7 @@
+{
+  "cors": {
+    "methods": ["GET", "PUT", "POST", "DELETE"],
+    "origin": "*"
+  },
+  "morgan": ":method :remote-addr :url :status :res[content-length] - :response-time ms"
+}
