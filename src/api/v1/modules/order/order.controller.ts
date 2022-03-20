@@ -1,14 +1,14 @@
 import ControllerBase from '../../bases/controller.base';
-import UserService from './user.service';
+import OrderService from './order.service';
 import { Request, Response } from 'express';
-import { IUserLogin } from './user.model';
+import { IOrderSearch } from './order.model';
 
-class UserController extends ControllerBase {
-  private readonly _service: UserService;
+class OrderController extends ControllerBase {
+  private readonly _service: OrderService;
 
   public constructor() {
     super();
-    this._service = new UserService();
+    this._service = new OrderService();
   }
 
   public async getAll(req: Request, res: Response): Promise<void> {
@@ -22,4 +22,4 @@ class UserController extends ControllerBase {
   }
 }
 
-export default UserController;
+export default OrderController;

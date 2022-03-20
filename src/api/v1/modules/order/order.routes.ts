@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import UserController from './user.controller';
+import OrderController from './order.controller';
 
 const router = Router();
-const controller = new UserController();
+const controller = new OrderController();
 
 router.get('/', controller.getAll.bind(controller));
 

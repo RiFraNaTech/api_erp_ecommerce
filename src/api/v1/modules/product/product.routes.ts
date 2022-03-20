@@ -1,9 +1,24 @@
-import { Router } from "express";
-import ProductController from "./product.controller";
+import { Router } from 'express';
+import { isAdmin, isAuth } from '../../middlewares/auth.middleware';
+import ProductController from './product.controller';
 
 const router = Router();
 const controller = new ProductController();
 
-router.get("/", controller.getAll.bind(controller));
+// Listar todos los productos
+router.get('/', isAuth, controller.getAll.bind(controller));
+
+// Buscar producto por id
+router.get('/:id', isAuth, controller.getProductById.bind(controller));
+
+// Buscar producto por nombre de producto
+router.get(
+  '/:productname',
+  isAuth,
+  controller.getProductByProductName.bind(controller)
+);
+
+// Guardar un nuevo producto
+router.post('/', isAuth, isAdmin, controller.getAll.bind(controller));
 
 export default router;
