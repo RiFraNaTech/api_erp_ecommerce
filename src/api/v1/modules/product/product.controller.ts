@@ -11,9 +11,17 @@ class ProductController extends ControllerBase {
     this._service = new ProductService();
   }
 
-  public async getAll(req: Request, res: Response): Promise<void> {
+  public async getAll(
+    req: Request<{}, {}, {}, { name: string }>,
+    res: Response
+  ): Promise<void> {
     console.log(req.body, 'ruta principal');
-    const products = await this._service.findAll();
+    let products;
+    if (req.query.name) {
+      products = await this._service.findByProductName(req.query.name);
+    } else {
+      products = await this._service.findAll();
+    }
     res.json(products).end();
   }
 
@@ -31,15 +39,14 @@ class ProductController extends ControllerBase {
       res.status(404).json({ message: 'producto no encontrado' }).end();
       return;
     }
-    res.json({}).end();
   }
 
   public async getProductByProductName(
-    req: Request<{ productname: string }, {}, {}, { productname: string }>,
+    req: Request<{}, {}, {}, { productname: string }>,
     res: Response
   ): Promise<void> {
     console.log(req.params);
-    const productname = <any>req.params.productname;
+    const productname: string = req.query.productname as string;
     const product = await this._service.findByProductName(productname);
     if (product) {
       res.status(200).json(product).end();

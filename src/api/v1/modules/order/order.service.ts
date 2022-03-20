@@ -7,8 +7,9 @@ class OrderService extends ServiceBase<Order> {
     return getConnection().createEntityManager().find(Order);
   }
 
-  public findById(): Promise<Order[]> {
-    return getConnection().createEntityManager().find(Order);
+  public findById(id: number): Promise<Order | null> {
+    // findOneBy(Entity, { whereColumnEntity : param });
+    return getConnection().createEntityManager().findOneBy(Order, { id });
   }
 
   public findByUsername(nameuser: string): Promise<Order | null> {

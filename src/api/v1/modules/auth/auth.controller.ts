@@ -32,6 +32,36 @@ class AuthController extends ControllerBase {
       res.status(404).json({ message: 'usuario no valido' }).end();
     }
   }
+
+  public async signUp(
+    req: Request<{}, {}, IUserLogin>,
+    res: Response
+  ): Promise<void> {
+    const user = await this._service.findByUsername(req.body.username);
+    if (user) {
+      const msg: string = 'ya existe un usuario ' + req.body.username;
+      res.status(400).json({ message: msg }).end();
+    } else {
+      if (!(req.body.username === '' && req.body.password === '')) {
+        let user = req.body.username;
+        let pass = req.body.password;
+        let noAdmin: boolean = false;
+
+        const newUser = await this._service.saveNewUser(user, pass, noAdmin);
+
+        const msg: string = 'Usuario creado con éxito - username: ' + user;
+
+        res.status(201).json({ message: msg }).end();
+        return;
+      } else {
+        res
+          .status(400)
+          .json({ message: 'usuario y contrasenia no pueden estar vacios' })
+          .end();
+        return;
+      }
+    }
+  }
 }
 
 export default AuthController;

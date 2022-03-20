@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from 'express';
 export interface IUserLogin {
   username: string;
   password: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
 }
 
 const jwtSecret = '@QEGTUI';

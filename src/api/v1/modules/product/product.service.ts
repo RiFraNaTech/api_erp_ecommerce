@@ -1,6 +1,6 @@
 import { Product } from './product.model';
 import ServiceBase from '../../bases/service.base';
-import { getConnection } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 
 class ProductService extends ServiceBase<Product> {
   public findAll(): Promise<Product[]> {
@@ -15,12 +15,16 @@ class ProductService extends ServiceBase<Product> {
       .findOneBy(Product, { id: productId });
   }
 
-  public findByProductName(productName: string): Promise<Product | null> {
+  public findByProductName(productName: string): Promise<Product[]> {
     // findOneBy(Entity, { whereColum : param });
     console.log(productName, '- busq por nombre');
-    return getConnection()
-      .createEntityManager()
-      .findOneBy(Product, { name: productName });
+    //return getConnection().createEntityManager().findOneBy(Product, { name: productName });
+    return getRepository(Product)
+      .createQueryBuilder('p')
+      .where('lower(p.nombre_prod) like lower(:name)', {
+        name: `%${productName}%`,
+      })
+      .getMany();
   }
 }
 

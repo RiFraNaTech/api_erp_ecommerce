@@ -17,6 +17,19 @@ class UserService extends ServiceBase<User> {
       .createEntityManager()
       .findOneBy(User, { username: nameuser });
   }
+
+  public saveNewUser(
+    username: string,
+    password: string,
+    isAdmin: boolean
+  ): Promise<User | null> {
+    let user = {
+      username,
+      password,
+      isAdmin,
+    };
+    return getConnection().createEntityManager().save(User, user);
+  }
 }
 
 export default UserService;

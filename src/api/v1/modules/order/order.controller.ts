@@ -16,9 +16,19 @@ class OrderController extends ControllerBase {
     res.json(users).end();
   }
 
-  public async getById(req: Request, res: Response): Promise<void> {
-    const user = await this._service.findById();
-    res.json(user).end();
+  public async getOrderById(
+    req: Request<{ id: number }>,
+    res: Response
+  ): Promise<void> {
+    const order = await this._service.findById(<any>req.params.id);
+    if (order) {
+      res.status(200).json(order).end();
+      return;
+    } else {
+      res.status(404).json({ message: 'pedido no encontrado' }).end();
+      return;
+    }
+    res.json({}).end();
   }
 }
 

@@ -5,18 +5,11 @@ import ProductController from './product.controller';
 const router = Router();
 const controller = new ProductController();
 
-// Listar todos los productos
+// Listar todos los productos y buscar por nombre de producto
 router.get('/', isAuth, controller.getAll.bind(controller));
 
 // Buscar producto por id
 router.get('/:id', isAuth, controller.getProductById.bind(controller));
-
-// Buscar producto por nombre de producto
-router.get(
-  '/:productname',
-  isAuth,
-  controller.getProductByProductName.bind(controller)
-);
 
 // Guardar un nuevo producto
 router.post('/', isAuth, isAdmin, controller.getAll.bind(controller));
